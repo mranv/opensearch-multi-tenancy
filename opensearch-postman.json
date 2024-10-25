@@ -1,0 +1,325 @@
+{
+  "info": {
+    "_postman_id": "opensearch-multitenancy",
+    "name": "OpenSearch Multi-tenant Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "0. Admin Operations",
+      "item": [
+        {
+          "name": "Check Cluster Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://localhost:9200/_cluster/health",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["_cluster", "health"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "admin"},
+                {"key": "password", "value": "Admin123!@#456"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "List All Indices",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://localhost:9200/_cat/indices?v",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["_cat", "indices"],
+              "query": [{"key": "v", "value": null}]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "admin"},
+                {"key": "password", "value": "Admin123!@#456"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1. Tenant X Operations",
+      "item": [
+        {
+          "name": "Create Index - tenant-x-users",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "https://localhost:9200/tenant-x-users",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-x-users"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_x"},
+                {"key": "password", "value": "TenantX123!@#"}
+              ]
+            },
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"settings\": {\n    \"number_of_shards\": 1,\n    \"number_of_replicas\": 0\n  },\n  \"mappings\": {\n    \"properties\": {\n      \"name\": { \"type\": \"text\" },\n      \"email\": { \"type\": \"keyword\" },\n      \"department\": { \"type\": \"keyword\" }\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Document - Tenant X",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "https://localhost:9200/tenant-x-users/_doc",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-x-users", "_doc"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_x"},
+                {"key": "password", "value": "TenantX123!@#"}
+              ]
+            },
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@tenant-x.com\",\n  \"department\": \"Engineering\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Search Documents - Tenant X",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://localhost:9200/tenant-x-users/_search",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-x-users", "_search"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_x"},
+                {"key": "password", "value": "TenantX123!@#"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Tenant Y Operations",
+      "item": [
+        {
+          "name": "Create Index - tenant-y-users",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "https://localhost:9200/tenant-y-users",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-y-users"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_y"},
+                {"key": "password", "value": "TenantY123!@#"}
+              ]
+            },
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"settings\": {\n    \"number_of_shards\": 1,\n    \"number_of_replicas\": 0\n  },\n  \"mappings\": {\n    \"properties\": {\n      \"name\": { \"type\": \"text\" },\n      \"email\": { \"type\": \"keyword\" },\n      \"department\": { \"type\": \"keyword\" }\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Document - Tenant Y",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "https://localhost:9200/tenant-y-users/_doc",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-y-users", "_doc"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_y"},
+                {"key": "password", "value": "TenantY123!@#"}
+              ]
+            },
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane@tenant-y.com\",\n  \"department\": \"Marketing\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Search Documents - Tenant Y",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://localhost:9200/tenant-y-users/_search",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-y-users", "_search"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_y"},
+                {"key": "password", "value": "TenantY123!@#"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Tenant Z Operations",
+      "item": [
+        {
+          "name": "Create Index - tenant-z-users",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "https://localhost:9200/tenant-z-users",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-z-users"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_z"},
+                {"key": "password", "value": "TenantZ123!@#"}
+              ]
+            },
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"settings\": {\n    \"number_of_shards\": 1,\n    \"number_of_replicas\": 0\n  },\n  \"mappings\": {\n    \"properties\": {\n      \"name\": { \"type\": \"text\" },\n      \"email\": { \"type\": \"keyword\" },\n      \"department\": { \"type\": \"keyword\" }\n    }\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Document - Tenant Z",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "https://localhost:9200/tenant-z-users/_doc",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-z-users", "_doc"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_z"},
+                {"key": "password", "value": "TenantZ123!@#"}
+              ]
+            },
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Bob Wilson\",\n  \"email\": \"bob@tenant-z.com\",\n  \"department\": \"Sales\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Search Documents - Tenant Z",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://localhost:9200/tenant-z-users/_search",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-z-users", "_search"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_z"},
+                {"key": "password", "value": "TenantZ123!@#"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Cross-Tenant Tests",
+      "item": [
+        {
+          "name": "Y Try Access X Data (Should Fail)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://localhost:9200/tenant-x-users/_search",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-x-users", "_search"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_y"},
+                {"key": "password", "value": "TenantY123!@#"}
+              ]
+            }
+          }
+        },
+        {
+          "name": "Z Try Access Y Data (Should Fail)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "https://localhost:9200/tenant-y-users/_search",
+              "protocol": "https",
+              "host": ["localhost"],
+              "port": "9200",
+              "path": ["tenant-y-users", "_search"]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {"key": "username", "value": "tenant_z"},
+                {"key": "password", "value": "TenantZ123!@#"}
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

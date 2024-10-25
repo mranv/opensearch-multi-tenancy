@@ -1,0 +1,18 @@
+cluster.name: opensearch-cluster
+node.name: opensearch-node1
+network.host: 0.0.0.0
+discovery.type: single-node
+
+plugins.security.ssl.http.enabled: true
+plugins.security.ssl.http.pemcert_filepath: config/node.pem
+plugins.security.ssl.http.pemkey_filepath: config/node-key.pem
+plugins.security.ssl.http.pemtrustedcas_filepath: config/root-ca.pem
+plugins.security.allow_unsafe_democertificates: true
+plugins.security.allow_default_init_securityindex: true
+plugins.security.audit.type: internal_opensearch
+
+plugins.security.authcz.admin_dn:
+  - "CN=admin,OU=client,O=client,L=test,C=de"
+
+path.data: /usr/share/opensearch/data
+path.logs: /usr/share/opensearch/logs
