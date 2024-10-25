@@ -1,0 +1,51 @@
+# config/roles.yml
+---
+_meta:
+  type: "roles"
+  config_version: 2
+
+tenant_x_admin:
+  cluster_permissions:
+    - "cluster:monitor/*"
+    - "indices:admin/create"
+    - "indices:admin/mapping/put"
+  index_permissions:
+    - index_patterns:
+        - "tenant-x-*"
+      allowed_actions:
+        - "read"
+        - "write"
+        - "delete"
+        - "create_index"
+        - "manage"
+
+tenant_y_admin:
+  cluster_permissions:
+    - "cluster:monitor/*"
+    - "indices:admin/create"
+    - "indices:admin/mapping/put"
+  index_permissions:
+    - index_patterns:
+        - "tenant-y-*"
+      allowed_actions:
+        - "read"
+        - "write"
+        - "delete"
+        - "create_index"
+        - "manage"
+
+tenant_z_admin:
+  cluster_permissions:
+    - "cluster:monitor/*"
+    - "indices:admin/create"
+    - "indices:admin/mapping/put"
+  index_permissions:
+    - index_patterns:
+        - "tenant-z-*"
+      allowed_actions:
+        - "read"
+        - "write"
+        - "delete"
+        - "create_index"
+        - "manage"
+
