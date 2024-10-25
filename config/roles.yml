@@ -1,51 +1,36 @@
-# config/roles.yml
----
 _meta:
   type: "roles"
   config_version: 2
 
-tenant_x_admin:
+tenant_x_role:
   cluster_permissions:
-    - "cluster:monitor/*"
-    - "indices:admin/create"
-    - "indices:admin/mapping/put"
+    - "cluster_composite_ops_ro"
   index_permissions:
     - index_patterns:
         - "tenant-x-*"
       allowed_actions:
-        - "read"
-        - "write"
-        - "delete"
+        - "crud"
         - "create_index"
         - "manage"
 
-tenant_y_admin:
+tenant_y_role:
   cluster_permissions:
-    - "cluster:monitor/*"
-    - "indices:admin/create"
-    - "indices:admin/mapping/put"
+    - "cluster_composite_ops_ro"
   index_permissions:
     - index_patterns:
         - "tenant-y-*"
       allowed_actions:
-        - "read"
-        - "write"
-        - "delete"
+        - "crud"
         - "create_index"
         - "manage"
 
-tenant_z_admin:
+tenant_z_role:
   cluster_permissions:
-    - "cluster:monitor/*"
-    - "indices:admin/create"
-    - "indices:admin/mapping/put"
+    - "cluster_composite_ops_ro"
   index_permissions:
     - index_patterns:
         - "tenant-z-*"
       allowed_actions:
-        - "read"
-        - "write"
-        - "delete"
+        - "crud"
         - "create_index"
         - "manage"
-

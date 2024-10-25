@@ -1,0 +1,148 @@
+{
+    "info": {
+      "_postman_id": "your-collection-id",
+      "name": "OpenSearch Multi-tenant Testing",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "1. Admin - Check Cluster Health",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "https://localhost:9200/_cluster/health",
+            "protocol": "https",
+            "host": ["localhost"],
+            "port": "9200",
+            "path": ["_cluster", "health"]
+          },
+          "auth": {
+            "type": "basic",
+            "basic": [
+              {
+                "key": "username",
+                "value": "admin",
+                "type": "string"
+              },
+              {
+                "key": "password",
+                "value": "correctHorse45Battery&&Staple",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "2. Tenant X - Create Index",
+        "request": {
+          "method": "PUT",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"settings\": {\n        \"number_of_shards\": 1,\n        \"number_of_replicas\": 0\n    },\n    \"mappings\": {\n        \"properties\": {\n            \"name\": { \"type\": \"text\" },\n            \"email\": { \"type\": \"keyword\" },\n            \"created_at\": { \"type\": \"date\" }\n        }\n    }\n}"
+          },
+          "url": {
+            "raw": "https://localhost:9200/tenant-x-users",
+            "protocol": "https",
+            "host": ["localhost"],
+            "port": "9200",
+            "path": ["tenant-x-users"]
+          },
+          "auth": {
+            "type": "basic",
+            "basic": [
+              {
+                "key": "username",
+                "value": "tenant_x",
+                "type": "string"
+              },
+              {
+                "key": "password",
+                "value": "TenantX45Battery##Horse",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "3. Tenant X - Add Document",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@tenant-x.com\",\n    \"created_at\": \"2024-10-25T10:00:00Z\"\n}"
+          },
+          "url": {
+            "raw": "https://localhost:9200/tenant-x-users/_doc",
+            "protocol": "https",
+            "host": ["localhost"],
+            "port": "9200",
+            "path": ["tenant-x-users", "_doc"]
+          },
+          "auth": {
+            "type": "basic",
+            "basic": [
+              {
+                "key": "username",
+                "value": "tenant_x",
+                "type": "string"
+              },
+              {
+                "key": "password",
+                "value": "TenantX45Battery##Horse",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      {
+        "name": "4. Tenant X - Search Documents",
+        "request": {
+          "method": "GET",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "url": {
+            "raw": "https://localhost:9200/tenant-x-users/_search",
+            "protocol": "https",
+            "host": ["localhost"],
+            "port": "9200",
+            "path": ["tenant-x-users", "_search"]
+          },
+          "auth": {
+            "type": "basic",
+            "basic": [
+              {
+                "key": "username",
+                "value": "tenant_x",
+                "type": "string"
+              },
+              {
+                "key": "password",
+                "value": "TenantX45Battery##Horse",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }

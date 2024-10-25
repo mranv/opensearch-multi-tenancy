@@ -1,17 +1,21 @@
-# config/roles_mapping.yml
----
 _meta:
   type: "rolesmapping"
   config_version: 2
 
-tenant_x_admin:
+tenant_x_role:
   users:
-    - "tenant_x_admin"
+    - "tenant_x"
+  backend_roles:
+    - "tenant_x_role"
 
-tenant_y_admin:
+tenant_y_role:
   users:
-    - "tenant_y_admin"
+    - "tenant_y"
+  backend_roles:
+    - "tenant_y_role"
 
-tenant_z_admin:
+tenant_z_role:
   users:
-    - "tenant_z_admin"
+    - "tenant_z"
+  backend_roles:
+    - "tenant_z_role"
